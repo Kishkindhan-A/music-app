@@ -1,55 +1,49 @@
-# Devil - Premium Music Streaming App 🎵
+# Musical App (Devil)
 
-Devil is a high-fidelity, pixel-perfect clone of the Spotify app (2024/2025 UI), built using **React Native** and **Expo**. It features a modern discovery-based Home screen, a powerful search engine, and a global persistent player.
+A high-fidelity Spotify clone built with React Native and Expo. This app replicates the premium user experience of Spotify's 2024/2025 interface.
 
-## ✨ Key Features
-- **1:1 UI Clone:** Exact measurements, typography, and color schemes matched to the latest Spotify design.
-- **Home Discovery Hub:** Dynamic "Jump back in", "Made For You", and "Recently Played" sections.
-- **Global Persistent Player:** A floating MiniPlayer that stays synced across all screens.
-- **Premium Full-Screen Modal:** Complete playback controls, real-time seek bar, and an interactive "Spotify Lyrics" card.
-- **Smart Spotify Integration:** Connects to the Spotify Web API for real-time metadata, album art, and artist info.
-- **Free "Premium" Experience:** Unlimited skips, no ads, and on-demand playback included by design.
+## 📱 Features
 
-## 🛠️ Tech Stack
-- **Framework:** React Native / Expo
-- **Navigation:** Expo Router (File-based navigation)
-- **State Management:** React Context API (Player State)
-- **UI Components:** Jetpack Compose-inspired Themed components
-- **API:** Spotify Web API
+*   **Pixel-Perfect UI:** Identical design to the official Spotify app.
+*   **Home Screen:** Personalized greetings, recently played grid, and curated sections.
+*   **Live Search:** Search for any track or artist using the Spotify Web API.
+*   **Global Player:** A persistent MiniPlayer and a full-screen player with lyrics.
+*   **Plus (+) Button:** The latest 2025 Spotify UI update for saving tracks.
 
-## 🚀 Getting Started
+## ⚠️ What's Currently Simulated / Missing
 
-### Prerequisites
-- Node.js installed
-- Expo Go app on your phone (for mobile testing)
+*   **Full Audio Playback:** Currently uses 30-second free Spotify previews. Full-length streaming requires a premium account or third-party stream integration.
+*   **Offline Downloads:** The "Download" feature is UI-only and does not save files to local storage yet.
+*   **User Profiles:** The app uses a shared developer token; individual user login (OAuth) for personal playlists is not implemented.
+*   **Real-time Lyrics:** Lyrics are currently static placeholders within the premium player UI.
 
-### Installation
-1. Clone the repo:
-   ```bash
-   git clone https://github.com/Kishkindhan-A/music-app.git
-   ```
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Set up your API keys:
-   - Create a file at `constants/Config.ts`
-   - Add your Spotify Client ID and Secret:
-   ```typescript
-   export const SPOTIFY_CONFIG = {
-     clientId: 'YOUR_CLIENT_ID',
-     clientSecret: 'YOUR_CLIENT_SECRET',
-   };
-   ```
+## 🛠 Tech Stack
 
-### Running the App
-```bash
-npx expo start
-```
-Press **'a'** for Android or scan the QR code with **Expo Go**.
+*   **Framework:** React Native / Expo
+*   **Navigation:** Expo Router
+*   **State:** React Context API
+*   **Icons:** MaterialCommunityIcons & Ionicons
 
-## 📸 Screenshots
-*(Add your screenshots here to make the repo look professional!)*
+## 🚀 Installation & Setup
+
+1.  **Clone the Repo:**
+    ```bash
+    git clone https://github.com/Kishkindhan-A/music-app.git
+    ```
+2.  **Install Packages:**
+    ```bash
+    npm install
+    ```
+3.  **Config API Keys:**
+    Add your Spotify `clientId` and `clientSecret` in `constants/Config.ts`.
+4.  **Run:**
+    ```bash
+    npx expo start
+    ```
 
 ## 📄 License
-MIT License - Created for educational purposes.
+
+MIT License. This project is for educational and research purposes only.
+
+---
+*Created by Senior Developer for the Devil Project.*
