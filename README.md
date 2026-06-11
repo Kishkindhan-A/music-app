@@ -41,9 +41,3 @@ A high-fidelity Spotify clone built with React Native and Expo. This app replica
     npx expo start
     ```
 
-## 📄 License
-
-MIT License. This project is for educational and research purposes only.
-
----
-*Created by Senior Developer for the Devil Project.*
