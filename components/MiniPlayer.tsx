@@ -1,29 +1,24 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity, Image, Dimensions, Platform } from 'react-native';
-import { Text, View } from './Themed';
+import { StyleSheet, TouchableOpacity, Image, Dimensions, Platform, View, Text } from 'react-native';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { usePlayer } from '@/context/PlayerContext';
 
-const { width } = Dimensions.get('window');
-
 export default function MiniPlayer() {
-  const { currentTrack, isPlaying, togglePlay, progress, duration } = usePlayer();
+  const { currentTrack, isPlaying, pause, resume } = usePlayer();
 
   if (!currentTrack) return null;
-
-  const progressPercent = duration > 0 ? (progress / duration) * 100 : 0;
 
   return (
     <TouchableOpacity
       style={styles.container}
       activeOpacity={1}
-      onPress={() => router.push('/modal')}
+      onPress={() => console.log('Open modal')}
     >
       <View style={styles.content}>
-        <Image source={{ uri: currentTrack.image }} style={styles.image} />
+        <Image source={{ uri: currentTrack.albumUrl }} style={styles.image} />
         <View style={styles.textContainer}>
-          <Text style={styles.title} numberOfLines={1}>{currentTrack.name}</Text>
+          <Text style={styles.title} numberOfLines={1}>{currentTrack.title}</Text>
           <Text style={styles.artist} numberOfLines={1}>{currentTrack.artist}</Text>
         </View>
 
@@ -33,7 +28,11 @@ export default function MiniPlayer() {
           </TouchableOpacity>
           <TouchableOpacity style={styles.iconButton} onPress={(e) => {
             e.stopPropagation();
-            togglePlay();
+            if (isPlaying) {
+              pause();
+            } else {
+              resume();
+            }
           }}>
             <Ionicons name={isPlaying ? "pause" : "play"} size={28} color="white" />
           </TouchableOpacity>
@@ -42,7 +41,7 @@ export default function MiniPlayer() {
 
       {/* Ultra-thin Spotify line progress */}
       <View style={styles.progressBarBg}>
-        <View style={[styles.progressFill, { width: `${progressPercent}%` }]} />
+        <View style={[styles.progressFill, { width: `30%` }]} />
       </View>
     </TouchableOpacity>
   );

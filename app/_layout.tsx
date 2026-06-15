@@ -1,22 +1,20 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import { DarkTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
+import { Slot } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
+import { View, StyleSheet, Platform, SafeAreaView } from 'react-native';
 import 'react-native-reanimated';
 
-import { useColorScheme } from '@/components/useColorScheme';
 import { PlayerProvider } from '@/context/PlayerContext';
+import { AppProvider, useAppContext } from '@/context/AppContext';
+import LeftSidebar from '@/components/LeftSidebar';
+import RightSidebar from '@/components/RightSidebar';
+import BottomPlayer from '@/components/BottomPlayer';
 
 export {
-  // Catch any errors thrown by the Layout component.
   ErrorBoundary,
 } from 'expo-router';
-
-export const unstable_settings = {
-  // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: '(tabs)',
-};
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -26,7 +24,6 @@ export default function RootLayout() {
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
   });
 
-  // Expo Router uses Error Boundaries to catch errors in the navigation tree.
   useEffect(() => {
     if (error) throw error;
   }, [error]);
@@ -41,18 +38,64 @@ export default function RootLayout() {
     return null;
   }
 
-  return <RootLayoutNav />;
+  return (
+    <AppProvider>
+      <PlayerProvider>
+        <RootLayoutNav />
+      </PlayerProvider>
+    </AppProvider>
+  );
 }
 
 function RootLayoutNav() {
+  const isDesktop = Platform.OS === 'web' || Platform.OS === 'windows' || Platform.OS === 'macos';
+  const { isRightSidebarOpen } = useAppContext();
+
   return (
-    <PlayerProvider>
-      <ThemeProvider value={DarkTheme}>
-        <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="modal" options={{ presentation: 'transparentModal', animation: 'slide_up', headerShown: false }} />
-        </Stack>
-      </ThemeProvider>
-    </PlayerProvider>
+    <ThemeProvider value={DarkTheme}>
+      <SafeAreaView style={styles.safeArea}>
+        {isDesktop ? (
+          <View style={styles.desktopContainer}>
+            {/* Top Section: Panes */}
+            <View style={styles.panesContainer}>
+              <LeftSidebar />
+              <View style={styles.mainContent}>
+                <Slot />
+              </View>
+              {isRightSidebarOpen && <RightSidebar />}
+            </View>
+            {/* Bottom Section: Player */}
+            <BottomPlayer />
+          </View>
+        ) : (
+          <Slot />
+        )}
+      </SafeAreaView>
+    </ThemeProvider>
   );
 }
+
+const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#000',
+  },
+  desktopContainer: {
+    flex: 1,
+    backgroundColor: '#000',
+    padding: 8,
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  panesContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    marginBottom: 8,
+  },
+  mainContent: {
+    flex: 1,
+    backgroundColor: '#121212',
+    borderRadius: 8,
+    overflow: 'hidden',
+  }
+});
